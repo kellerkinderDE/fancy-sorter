@@ -4,6 +4,8 @@ namespace FancySorter;
 
 class JeansSizeSorter implements SorterInterface
 {
+  const PATTERN = '!^(\d+)W?\s*/\s*(\d+)L?$!';
+
   public function sort(array $input)
   {
     usort($input, [$this, 'sortCallback']);
@@ -15,7 +17,7 @@ class JeansSizeSorter implements SorterInterface
     $filtered = array_filter(
       $input,
       function($value) {
-        return preg_match('!^(\d+)W?\s*/\s*(\d+)L?$!', $value);
+        return preg_match(self::PATTERN, $value);
       }
     );
 
@@ -32,6 +34,6 @@ class JeansSizeSorter implements SorterInterface
 
   protected function normalizeValue($input)
   {
-    return preg_replace('!^(\d+)W?\s*/\s*(\d+)L?$!', '$1/$2', trim($input));
+    return preg_replace(self::PATTERN, '$1/$2', trim($input));
   }
 }

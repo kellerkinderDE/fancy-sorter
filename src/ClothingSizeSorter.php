@@ -4,7 +4,8 @@ namespace FancySorter;
 
 class ClothingSizeSorter implements SorterInterface
 {
-  protected $mapping = ['S' => -1, 'M' => 0, 'L' => 1];
+  const MAPPING = ['S' => -1, 'M' => 0, 'L' => 1];
+  const PATTERN = '!^((\d)?(X+))?([SL])$!';
 
   public function sort(array $input)
   {
@@ -17,8 +18,8 @@ class ClothingSizeSorter implements SorterInterface
     $filtered = array_filter(
       $input,
       function($value) {
-        return array_key_exists($value, $this->mapping) ||
-               preg_match('!^((\d)?(X+))?([SL])$!', $value);
+        return array_key_exists($value, self::MAPPING) ||
+               preg_match(self::PATTERN, $value);
       }
     );
 
@@ -41,17 +42,17 @@ class ClothingSizeSorter implements SorterInterface
     $input = trim(strtoupper($input));
     $priority = NULL;
 
-    if (array_key_exists($input, $this->mapping)) {
-      return $this->mapping[$input];
+    if (array_key_exists($input, self::MAPPING)) {
+      return self::MAPPING[$input];
     }
 
     preg_match(
-      '!^((\d)?(X+))?([SL])$!',
+      self::PATTERN,
       $input,
       $matches
     );
 
-    $priority = $this->mapping[$matches[4]];
+    $priority = self::MAPPING[$matches[4]];
 
     if ($matches[2] === '') {
       $matches[2] = strlen($matches[3]);
