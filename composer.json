@@ -1,0 +1,25 @@
+{
+    "name": "k10r/fancy-sorter",
+    "license": "proprietary",
+    "description": "<description>",
+    "authors": [
+        {
+            "name": "Stefan Matheis",
+            "email": "stefan@kellerkinder.de"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "FancySorter\\": "src/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    }
+}
