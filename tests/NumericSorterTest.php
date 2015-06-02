@@ -7,22 +7,35 @@ use PHPUnit_Framework_TestCase;
 
 class NumericSorterTest extends PHPUnit_Framework_TestCase
 {
-  public function testSort()
+  public function validInputProvider()
+  {
+    return [
+      [
+        [5, 3, 4, 2, 1],
+        [1, 2, 3, 4, 5]
+      ],
+      [
+        ['5', '3', 4, '2', '1'],
+        ['1', '2', '3', 4, '5']
+      ],
+      [
+        [128, 54, 50, 96, 52],
+        [50, 52, 54, 96, 128]
+      ]
+    ];
+  }
+
+  /**
+   * @dataProvider validInputProvider
+   */
+  public function testSort($input, $expectedResult)
   {
     $sorter = new NumericSorter();
 
     $this->assertSame(
-      [50, 52, 54, 96, 128],
-      $sorter->sort([128, 54, 50, 96, 52])
+      $expectedResult,
+      $sorter->sort($input)
     );
-  }
-
-  public function validInputProvider()
-  {
-    return [
-      [[1, 2, 3, 4, 5]],
-      [['1', '2', '3', '4', '5']]
-    ];
   }
 
   /**
