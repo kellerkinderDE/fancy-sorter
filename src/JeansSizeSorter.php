@@ -4,7 +4,7 @@ namespace FancySorter;
 
 class JeansSizeSorter implements SorterInterface
 {
-  const PATTERN = '!^(\d+)W?\s*/\s*(\d+)L?$!';
+  const PATTERN = '!^(?P<width>\d+)W?\s*/\s*(?P<length>\d+)L?$!';
 
   public function sort(array $input)
   {

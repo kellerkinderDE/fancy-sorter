@@ -5,7 +5,7 @@ namespace FancySorter;
 class ClothingSizeSorter implements SorterInterface
 {
   const MAPPING = ['S' => -1, 'M' => 0, 'L' => 1];
-  const PATTERN = '!^((\d)?(X+))?([SL])$!';
+  const PATTERN = '!^((?P<count>\d)?(?P<x>X+))?(?P<size>[SL])$!';
 
   public function sort(array $input)
   {
@@ -46,20 +46,16 @@ class ClothingSizeSorter implements SorterInterface
       return self::MAPPING[$input];
     }
 
-    preg_match(
-      self::PATTERN,
-      $input,
-      $matches
-    );
+    preg_match(self::PATTERN, $input, $matches);
 
-    $priority = self::MAPPING[$matches[4]];
+    $priority = self::MAPPING[$matches['size']];
 
-    if ($matches[2] === '') {
-      $matches[2] = strlen($matches[3]);
+    if ($matches['count'] === '') {
+      $matches['count'] = strlen($matches['x']);
     }
 
-    if ($matches[2]) {
-      $priority += intval($matches[2]) * $priority;
+    if ($matches['count']) {
+      $priority += intval($matches['count']) * $priority;
     }
 
     return $priority;
