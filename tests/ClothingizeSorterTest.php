@@ -36,9 +36,18 @@ class ClothingSizeSorterTest extends PHPUnit_Framework_TestCase
   public function invalidInputProvider()
   {
     return [
-      [['32/34', '32W/34L']], // JeansSize
-      [[1, 2, 3, 4, 5]], // Numeric
-      [['Green', 'Blue', 'Red']] // Alphanumeric
+      [
+        ['32/34', '32W/34L'],
+        'FancySorter\ClothingSizeSorter does not support sorting the following values: "32\/34", "32W\/34L"'
+      ],
+      [
+        [1, 2, 3, 4, 5],
+        'FancySorter\ClothingSizeSorter does not support sorting the following values: 1, 2, 3, 4, 5'
+      ],
+      [
+        ['Green', 'Blue', 'Red'],
+        'FancySorter\ClothingSizeSorter does not support sorting the following values: "Green", "Blue", "Red"'
+      ]
     ];
   }
 
@@ -53,10 +62,11 @@ class ClothingSizeSorterTest extends PHPUnit_Framework_TestCase
 
   /**
    * @dataProvider invalidInputProvider
-   * @expectedException InvalidArgumentException
    */
-  public function testInvalidSort($input)
+  public function testInvalidSort($input, $expectedExceptionMessage)
   {
+    $this->setExpectedException('InvalidArgumentException', $expectedExceptionMessage);
+
     $sorter = new ClothingSizeSorter();
     $sorter->sort($input);
   }

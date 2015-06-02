@@ -46,9 +46,18 @@ class JeansSizeSorterTest extends PHPUnit_Framework_TestCase
   public function invalidInputProvider()
   {
     return [
-      [['M', 'L', 'S', 'XS', '3XL']], // ClothingSize
-      [[1, 2, 3, 4, 5]], // Numeric
-      [['Green', 'Blue', 'Red']] // Alphanumeric
+      [
+        ['M', 'L', 'S', 'XS', '3XL'],
+        'FancySorter\JeansSizeSorter does not support sorting the following values: "M", "L", "S", "XS", "3XL"'
+      ],
+      [
+        [1, 2, 3, 4, 5],
+        'FancySorter\JeansSizeSorter does not support sorting the following values: 1, 2, 3, 4, 5'
+      ],
+      [
+        ['Green', 'Blue', 'Red'],
+        'FancySorter\JeansSizeSorter does not support sorting the following values: "Green", "Blue", "Red"'
+      ]
     ];
   }
 
@@ -63,10 +72,11 @@ class JeansSizeSorterTest extends PHPUnit_Framework_TestCase
 
   /**
    * @dataProvider invalidInputProvider
-   * @expectedException InvalidArgumentException
    */
-  public function testInvalidSort($input)
+  public function testInvalidSort($input, $expectedExceptionMessage)
   {
+    $this->setExpectedException('InvalidArgumentException', $expectedExceptionMessage);
+
     $sorter = new JeansSizeSorter();
     $sorter->sort($input);
   }

@@ -9,7 +9,13 @@ class NumericSorter implements SorterInterface
   public function sort(array $input)
   {
     if (!$this->supports($input)) {
-      throw new InvalidArgumentException();
+      throw new InvalidArgumentException(
+        sprintf(
+          '%s does not support sorting the following values: %s',
+          __CLASS__,
+          implode(', ', array_map('json_encode', $input))
+        )
+      );
     }
 
     sort($input);

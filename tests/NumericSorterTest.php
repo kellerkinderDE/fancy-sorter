@@ -37,9 +37,18 @@ class NumericSorterTest extends PHPUnit_Framework_TestCase
   public function invalidInputProvider()
   {
     return [
-      [['32/34', 2, 3, 4, 5]],
-      [['32W/34L', 2, 3, 4, 5]],
-      [['32W/34L', 2, 3, 4, 5]]
+      [
+        ['32/34', 2, 3, 4, 5],
+        'FancySorter\NumericSorter does not support sorting the following values: "32\/34", 2, 3, 4, 5'
+      ],
+      [
+        ['32W/34L', 2, 3, 4, 5],
+        'FancySorter\NumericSorter does not support sorting the following values: "32W\/34L", 2, 3, 4, 5'
+      ],
+      [
+        ['32W / 34L', 2, 3, 4, 5],
+        'FancySorter\NumericSorter does not support sorting the following values: "32W \/ 34L", 2, 3, 4, 5'
+      ]
     ];
   }
 
@@ -54,10 +63,11 @@ class NumericSorterTest extends PHPUnit_Framework_TestCase
 
   /**
    * @dataProvider invalidInputProvider
-   * @expectedException InvalidArgumentException
    */
-  public function testInvalidSort($input)
+  public function testInvalidSort($input, $expectedExceptionMessage)
   {
+    $this->setExpectedException('InvalidArgumentException', $expectedExceptionMessage);
+
     $sorter = new NumericSorter();
     $sorter->sort($input);
   }
