@@ -51,4 +51,14 @@ class NumericSorterTest extends PHPUnit_Framework_TestCase
     $sorter = new NumericSorter();
     $this->assertFalse($sorter->supports($input));
   }
+
+  /**
+   * @dataProvider invalidInputProvider
+   * @expectedException InvalidArgumentException
+   */
+  public function testInvalidSort($input)
+  {
+    $sorter = new NumericSorter();
+    $sorter->sort($input);
+  }
 }

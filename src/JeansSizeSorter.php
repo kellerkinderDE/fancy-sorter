@@ -2,12 +2,18 @@
 
 namespace FancySorter;
 
+use InvalidArgumentException;
+
 class JeansSizeSorter implements SorterInterface
 {
   const PATTERN = '!^(?P<width>\d+)W?\s*/\s*(?P<length>\d+)L?$!';
 
   public function sort(array $input)
   {
+    if (!$this->supports($input)) {
+      throw new InvalidArgumentException();
+    }
+
     usort($input, [$this, 'sortCallback']);
     return $input;
   }

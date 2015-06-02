@@ -2,6 +2,8 @@
 
 namespace FancySorter;
 
+use InvalidArgumentException;
+
 class ClothingSizeSorter implements SorterInterface
 {
   const MAPPING = ['S' => -1, 'M' => 0, 'L' => 1];
@@ -9,6 +11,10 @@ class ClothingSizeSorter implements SorterInterface
 
   public function sort(array $input)
   {
+    if (!$this->supports($input)) {
+      throw new InvalidArgumentException();
+    }
+
     usort($input, [$this, 'sortCallback']);
     return $input;
   }

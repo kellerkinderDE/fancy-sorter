@@ -2,10 +2,16 @@
 
 namespace FancySorter;
 
+use InvalidArgumentException;
+
 class NumericSorter implements SorterInterface
 {
   public function sort(array $input)
   {
+    if (!$this->supports($input)) {
+      throw new InvalidArgumentException();
+    }
+
     sort($input);
     return $input;
   }

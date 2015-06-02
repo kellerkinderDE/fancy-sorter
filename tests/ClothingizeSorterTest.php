@@ -50,4 +50,14 @@ class ClothingSizeSorterTest extends PHPUnit_Framework_TestCase
     $sorter = new ClothingSizeSorter();
     $this->assertFalse($sorter->supports($input));
   }
+
+  /**
+   * @dataProvider invalidInputProvider
+   * @expectedException InvalidArgumentException
+   */
+  public function testInvalidSort($input)
+  {
+    $sorter = new ClothingSizeSorter();
+    $sorter->sort($input);
+  }
 }
