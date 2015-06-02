@@ -21,6 +21,10 @@ class NumericSorterTest extends PHPUnit_Framework_TestCase
       [
         [128, 54, 50, 96, 52],
         [50, 52, 54, 96, 128]
+      ],
+      [
+        ['128', '54', '50', '96', '52'],
+        ['50', '52', '54', '96', '128']
       ]
     ];
   }

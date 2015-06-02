@@ -18,7 +18,7 @@ class NumericSorter implements SorterInterface
       );
     }
 
-    sort($input);
+    sort($input, SORT_NUMERIC);
     return $input;
   }
 
