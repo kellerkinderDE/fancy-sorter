@@ -2,7 +2,7 @@
 
 namespace FancySorter;
 
-class NumericSorter
+class NumericSorter implements SorterInterface
 {
   public function sort(array $input)
   {

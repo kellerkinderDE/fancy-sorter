@@ -2,7 +2,7 @@
 
 namespace FancySorter;
 
-class ClothingSizeSorter
+class ClothingSizeSorter implements SorterInterface
 {
   protected $mapping = ['S' => -1, 'M' => 0, 'L' => 1];
 

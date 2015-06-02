@@ -2,7 +2,7 @@
 
 namespace FancySorter;
 
-class JeansSizeSorter
+class JeansSizeSorter implements SorterInterface
 {
   public function sort(array $input)
   {
