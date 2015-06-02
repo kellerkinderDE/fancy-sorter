@@ -16,4 +16,15 @@ class AlphanumericSorterTest extends PHPUnit_Framework_TestCase
       $sorter->sort(['Green', 'Red', 'Blue'])
     );
   }
+
+  /**
+   * AlphanumericSorter is supposed to be able to support _everything_
+   * since the plan is, that if someone else is better suited to sort
+   * it, he/she should speak up and take it.
+   */
+  public function testSupports()
+  {
+    $sorter = new AlphanumericSorter();
+    $this->assertTrue($sorter->supports(['whatever']));
+  }
 }

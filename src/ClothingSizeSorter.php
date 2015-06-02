@@ -12,6 +12,19 @@ class ClothingSizeSorter implements SorterInterface
     return $input;
   }
 
+  public function supports(array $input)
+  {
+    $filtered = array_filter(
+      $input,
+      function($value) {
+        return array_key_exists($value, $this->mapping) ||
+               preg_match('!^((\d)?(X+))?([SL])$!', $value);
+      }
+    );
+
+    return count($input) === count($filtered);
+  }
+
   protected function sortCallback($a, $b)
   {
     $av = $this->calculatePriority($a);

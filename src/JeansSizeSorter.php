@@ -10,6 +10,18 @@ class JeansSizeSorter implements SorterInterface
     return $input;
   }
 
+  public function supports(array $input)
+  {
+    $filtered = array_filter(
+      $input,
+      function($value) {
+        return preg_match('!^(\d+)W?\s*/\s*(\d+)L?$!', $value);
+      }
+    );
+
+    return count($input) === count($filtered);
+  }
+
   protected function sortCallback($a, $b)
   {
     return strcasecmp(

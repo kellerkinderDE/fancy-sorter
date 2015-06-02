@@ -9,4 +9,9 @@ class AlphanumericSorter implements SorterInterface
     usort($input, 'strcasecmp');
     return $input;
   }
+
+  public function supports(array $input)
+  {
+    return true;
+  }
 }
