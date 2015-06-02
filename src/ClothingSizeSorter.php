@@ -31,8 +31,9 @@ class ClothingSizeSorter implements SorterInterface
     $av = $this->calculatePriority($a);
     $bv = $this->calculatePriority($b);
     
-    if ($av === $bv)
+    if ($av === $bv) {
       return 0;
+    }
 
     return $av <= $bv ? -1 : 1;
   }
