@@ -12,19 +12,24 @@ use ReflectionObject;
 
 class ChainedSorterTest extends PHPUnit_Framework_TestCase
 {
-  /**
-   * @dataProvider valueProvider
-   */
-  public function testSupports($input)
+  protected $sorter;
+
+  protected function setUp()
   {
-    $sorter = new ChainedSorter([
+    $this->sorter = new ChainedSorter([
       new ClothingSizeSorter(),
       new JeansSizeSorter(),
       new NumericSorter(),
       new AlphanumericSorter()
     ]);
+  }
 
-    $this->assertTrue($sorter->supports($input));
+  /**
+   * @dataProvider valueProvider
+   */
+  public function testSupports($input)
+  {
+    $this->assertTrue($this->sorter->supports($input));
   }
 
   /**
@@ -32,16 +37,9 @@ class ChainedSorterTest extends PHPUnit_Framework_TestCase
    */
   public function testSort($input, $expectedResult)
   {
-    $sorter = new ChainedSorter([
-      new ClothingSizeSorter(),
-      new JeansSizeSorter(),
-      new NumericSorter(),
-      new AlphanumericSorter()
-    ]);
-
     $this->assertSame(
       $expectedResult,
-      $sorter->sort($input)
+      $this->sorter->sort($input)
     );
   }
 
@@ -50,20 +48,13 @@ class ChainedSorterTest extends PHPUnit_Framework_TestCase
    */
   public function testInternalInstance($input, $_, $instanceClassname)
   {
-    $sorter = new ChainedSorter([
-      new ClothingSizeSorter(),
-      new JeansSizeSorter(),
-      new NumericSorter(),
-      new AlphanumericSorter()
-    ]);
-
-    $reflectedSorter = new ReflectionObject($sorter);
+    $reflectedSorter = new ReflectionObject($this->sorter);
     $reflectedGetSorter = $reflectedSorter->getMethod('getSorter');
     $reflectedGetSorter->setAccessible(true);
 
     $this->assertInstanceOf(
       $instanceClassname,
-      $reflectedGetSorter->invoke($sorter, $input)
+      $reflectedGetSorter->invoke($this->sorter, $input)
     );
   }
 
