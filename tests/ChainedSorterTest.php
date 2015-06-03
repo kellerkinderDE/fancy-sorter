@@ -122,8 +122,8 @@ class ChainedSorterTest extends PHPUnit_Framework_TestCase
         'FancySorter\JeansSizeSorter'
       ],
       [
-        [4, '3', 5, 1, 2],
-        [1, 2, '3', 4, 5],
+        [96, 52, '128', 50, 54],
+        [50, 52, 54, 96, '128'],
         'FancySorter\NumericSorter'
       ],
       [
