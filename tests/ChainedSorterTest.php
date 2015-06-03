@@ -80,6 +80,19 @@ class ChainedSorterTest extends PHPUnit_Framework_TestCase
     $this->assertTrue($this->sorter->supports([4, '3', 5, 1, 2]));
   }
 
+  /**
+   * @expectedException RuntimeException
+   * @expectedExceptionMessage FancySorter\ChainedSorter (containing FancySorter\NumericSorter) does not support sorting the following values: "32W\/34L", "30\/32"
+   */
+  public function testChainedWithOnlyNumericSort()
+  {
+    $this->sorter = new ChainedSorter([
+      new NumericSorter()
+    ]);
+
+    $this->sorter->sort(['32W/34L', '30/32']);
+  }
+
   public function testChainedWithOnlyJeansSize()
   {
     $this->sorter = new ChainedSorter([

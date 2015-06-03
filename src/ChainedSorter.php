@@ -2,6 +2,8 @@
 
 namespace FancySorter;
 
+use RuntimeException;
+
 class ChainedSorter implements SorterInterface
 {
   protected $sorters;
@@ -13,8 +15,18 @@ class ChainedSorter implements SorterInterface
 
   public function sort(array $input)
   {
-    $sorter = $this->getSorter($input);
-    return $sorter->sort($input);
+    if ($sorter = $this->getSorter($input)) {
+      return $sorter->sort($input);
+    }
+
+    throw new RuntimeException(
+      sprintf(
+        '%s (containing %s) does not support sorting the following values: %s',
+        __CLASS__,
+        implode(', ', array_map('get_class', $this->sorters)),
+        implode(', ', array_map('json_encode', $input))
+      )
+    );
   }
 
   public function supports(array $input)
