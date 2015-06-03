@@ -12,8 +12,8 @@ class ClothingSizeSorterTest extends PHPUnit_Framework_TestCase
     $sorter = new ClothingSizeSorter();
 
     $this->assertSame(
-      ['XS', 'S', 'M', 'L', 'XL'],
-      $sorter->sort(['M','L','S','XL','XS'])
+      ['XS', 'S', 'M', 'L', 'L', 'XL'],
+      $sorter->sort(['M', 'L', 'S', 'XL', 'XS', 'L'])
     );
   }
 
