@@ -58,6 +58,48 @@ class ChainedSorterTest extends PHPUnit_Framework_TestCase
     );
   }
 
+  /**
+   * @dataProvider valueProvider
+   */
+  public function testChainedWithOnlyAlphanumericSupportsEverything($input)
+  {
+    $this->sorter = new ChainedSorter([
+      new AlphanumericSorter()
+    ]);
+
+    $this->assertTrue($this->sorter->supports($input));
+  }
+
+  public function testChainedWithOnlyNumeric()
+  {
+    $this->sorter = new ChainedSorter([
+      new NumericSorter()
+    ]);
+
+    $this->assertFalse($this->sorter->supports(['32W/34L', '30/32']));
+    $this->assertTrue($this->sorter->supports([4, '3', 5, 1, 2]));
+  }
+
+  public function testChainedWithOnlyJeansSize()
+  {
+    $this->sorter = new ChainedSorter([
+      new JeansSizeSorter()
+    ]);
+
+    $this->assertFalse($this->sorter->supports(['M','L','S','XL','XS']));
+    $this->assertTrue($this->sorter->supports(['32W/34L', '30/32']));
+  }
+
+  public function testChainedWithOnlyClothingSize()
+  {
+    $this->sorter = new ChainedSorter([
+      new ClothingSizeSorter()
+    ]);
+
+    $this->assertFalse($this->sorter->supports(['Green', 'Blue', 'Red']));
+    $this->assertTrue($this->sorter->supports(['M','L','S','XL','XS']));
+  }
+
   public function valueProvider()
   {
     return [
