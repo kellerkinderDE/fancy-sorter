@@ -11,6 +11,15 @@ class ChainedSorter implements SorterInterface
 
   public function __construct(array $sorters)
   {
+    if (!$sorters) {
+      throw new InvalidArgumentException(
+        sprintf(
+          '%s requires at least one instance of SorterInterface',
+          __CLASS__
+        )
+      );
+    }
+
     $filtered = array_filter(
       $sorters,
       function($sorter) {
