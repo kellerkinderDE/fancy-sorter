@@ -1,6 +1,6 @@
 <?php
 
-namespace FancySorter;
+namespace Kellerkinder\FancySorter;
 
 use RuntimeException;
 use InvalidArgumentException;

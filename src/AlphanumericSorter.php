@@ -1,6 +1,6 @@
 <?php
 
-namespace FancySorter;
+namespace Kellerkinder\FancySorter;
 
 class AlphanumericSorter implements SorterInterface
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace FancySorter\Tests;
+namespace Kellerkinder\FancySorter\Tests;
 
-use FancySorter\ChainedSorter;
-use FancySorter\ClothingSizeSorter;
-use FancySorter\JeansSizeSorter;
-use FancySorter\NumericSorter;
-use FancySorter\AlphanumericSorter;
+use Kellerkinder\FancySorter\ChainedSorter;
+use Kellerkinder\FancySorter\ClothingSizeSorter;
+use Kellerkinder\FancySorter\JeansSizeSorter;
+use Kellerkinder\FancySorter\NumericSorter;
+use Kellerkinder\FancySorter\AlphanumericSorter;
 use PHPUnit_Framework_TestCase;
 use ReflectionObject;
 
@@ -82,7 +82,7 @@ class ChainedSorterTest extends PHPUnit_Framework_TestCase
 
   /**
    * @expectedException RuntimeException
-   * @expectedExceptionMessage FancySorter\ChainedSorter (containing FancySorter\NumericSorter) does not support sorting the following values: "32W\/34L", "30\/32"
+   * @expectedExceptionMessage Kellerkinder\FancySorter\ChainedSorter (containing Kellerkinder\FancySorter\NumericSorter) does not support sorting the following values: "32W\/34L", "30\/32"
    */
   public function testChainedWithOnlyNumericSort()
   {
@@ -115,7 +115,7 @@ class ChainedSorterTest extends PHPUnit_Framework_TestCase
 
   /**
    * @expectedException InvalidArgumentException
-   * @expectedExceptionMessage FancySorter\ChainedSorter does only accept an array of SorterInterface instances
+   * @expectedExceptionMessage Kellerkinder\FancySorter\ChainedSorter does only accept an array of SorterInterface instances
    */
   public function testChainedInvalidInstance()
   {
@@ -126,7 +126,7 @@ class ChainedSorterTest extends PHPUnit_Framework_TestCase
 
   /**
    * @expectedException InvalidArgumentException
-   * @expectedExceptionMessage FancySorter\ChainedSorter requires at least one instance of SorterInterface
+   * @expectedExceptionMessage Kellerkinder\FancySorter\ChainedSorter requires at least one instance of SorterInterface
    */
   public function testChainedEmptyArray()
   {
@@ -139,23 +139,23 @@ class ChainedSorterTest extends PHPUnit_Framework_TestCase
       [
         ['32W/34L', '30/32'],
         ['30/32', '32W/34L'],
-        'FancySorter\JeansSizeSorter'
+        'Kellerkinder\FancySorter\JeansSizeSorter'
       ],
       [
         [96, 52, '128', 50, 54],
         [50, 52, 54, 96, '128'],
-        'FancySorter\NumericSorter'
+        'Kellerkinder\FancySorter\NumericSorter'
       ],
       [
         ['Green', 'Blue', 'Red'],
         ['Blue', 'Green', 'Red'],
-        'FancySorter\AlphanumericSorter'
+        'Kellerkinder\FancySorter\AlphanumericSorter'
 
       ],
       [
         ['M','L','S','XL','XS'],
         ['XS', 'S', 'M', 'L', 'XL'],
-        'FancySorter\ClothingSizeSorter'
+        'Kellerkinder\FancySorter\ClothingSizeSorter'
       ]
     ];
   }

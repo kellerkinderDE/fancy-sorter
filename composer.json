@@ -1,5 +1,5 @@
 {
-    "name": "k10r/fancy-sorter",
+    "name": "kellerkinder/fancy-sorter",
     "license": "proprietary",
     "description": "<description>",
     "authors": [
@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "FancySorter\\": "src/"
+            "Kellerkinder\\FancySorter\\": "src/"
         }
     },
     "scripts": {

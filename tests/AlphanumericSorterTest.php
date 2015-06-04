@@ -1,8 +1,8 @@
 <?php
 
-namespace FancySorter\Tests;
+namespace Kellerkinder\FancySorter\Tests;
 
-use FancySorter\AlphanumericSorter;
+use Kellerkinder\FancySorter\AlphanumericSorter;
 use PHPUnit_Framework_TestCase;
 
 class AlphanumericSorterTest extends PHPUnit_Framework_TestCase

@@ -1,8 +1,8 @@
 <?php
 
-namespace FancySorter\Tests;
+namespace Kellerkinder\FancySorter\Tests;
 
-use FancySorter\ClothingSizeSorter;
+use Kellerkinder\FancySorter\ClothingSizeSorter;
 use PHPUnit_Framework_TestCase;
 
 class ClothingSizeSorterTest extends PHPUnit_Framework_TestCase
