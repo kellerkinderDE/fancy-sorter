@@ -113,6 +113,17 @@ class ChainedSorterTest extends PHPUnit_Framework_TestCase
     $this->assertTrue($this->sorter->supports(['M','L','S','XL','XS']));
   }
 
+  /**
+   * @expectedException InvalidArgumentException
+   * @expectedExceptionMessage FancySorter\ChainedSorter does only accept an array of SorterInterface instances
+   */
+  public function testChainedInvalidInstance()
+  {
+    new ChainedSorter([
+      new \stdClass()
+    ]);
+  }
+
   public function valueProvider()
   {
     return [

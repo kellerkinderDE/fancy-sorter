@@ -3,6 +3,7 @@
 namespace FancySorter;
 
 use RuntimeException;
+use InvalidArgumentException;
 
 class ChainedSorter implements SorterInterface
 {
@@ -10,6 +11,22 @@ class ChainedSorter implements SorterInterface
 
   public function __construct(array $sorters)
   {
+    $filtered = array_filter(
+      $sorters,
+      function($sorter) {
+        return $sorter instanceof SorterInterface;
+      }
+    );
+
+    if (count($sorters) !== count($filtered)) {
+      throw new InvalidArgumentException(
+        sprintf(
+          '%s does only accept an array of SorterInterface instances',
+          __CLASS__
+        )
+      );
+    }
+
     $this->sorters = $sorters;
   }
 
