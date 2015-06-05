@@ -6,7 +6,7 @@ use InvalidArgumentException;
 
 class JeansSizeSorter implements SorterInterface
 {
-  const PATTERN = '!^(?P<width>\d+)W?\s*/\s*(?P<length>\d+)L?$!';
+  protected static $pattern = '!^(?P<width>\d+)W?\s*/\s*(?P<length>\d+)L?$!';
 
   public function sort(array $input)
   {
@@ -29,7 +29,7 @@ class JeansSizeSorter implements SorterInterface
     $filtered = array_filter(
       $input,
       function($value) {
-        return preg_match(self::PATTERN, $value);
+        return preg_match(self::$pattern, $value);
       }
     );
 
@@ -46,6 +46,6 @@ class JeansSizeSorter implements SorterInterface
 
   protected function normalizeValue($input)
   {
-    return preg_replace(self::PATTERN, '$1/$2', trim($input));
+    return preg_replace(self::$pattern, '$1/$2', trim($input));
   }
 }
