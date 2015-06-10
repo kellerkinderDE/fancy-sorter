@@ -6,5 +6,5 @@ use Closure;
 
 interface ChainedSorterInterface extends SorterInterface
 {
-  public function __construct(array $sorters = []);
+  public function __construct(array $sorters = [], Closure $valueAccessor = null);
 }

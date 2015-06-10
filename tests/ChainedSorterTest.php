@@ -144,6 +144,20 @@ class ChainedSorterTest extends PHPUnit_Framework_TestCase
     $this->assertTrue($sorter->supports($input));
   }
 
+  /**
+   * @dataProvider nestedValueProvider
+   */
+  public function testNestedChainedEmptyArray($input)
+  {
+    $sorter = new ChainedSorter(
+      [],
+      function($value) {
+        return $value['optionname'];
+      }
+    );
+    $this->assertTrue($sorter->supports($input));
+  }
+
   public function valueProvider()
   {
     return [
@@ -166,6 +180,65 @@ class ChainedSorterTest extends PHPUnit_Framework_TestCase
       [
         ['M','L','S','XL','XS'],
         ['XS', 'S', 'M', 'L', 'XL'],
+        'Kellerkinder\FancySorter\ClothingSizeSorter'
+      ]
+    ];
+  }
+
+  public function nestedValueProvider()
+  {
+    return [
+      [
+        [
+          55 => ['optionname' => '27/32'],
+          54 => ['optionname' => '26/32'],
+          58 => ['optionname' => '26/34']
+        ],
+        [
+          ['optionname' => '26/32'],
+          ['optionname' => '26/34'],
+          ['optionname' => '27/32']
+        ],
+        'Kellerkinder\FancySorter\JeansSizeSorter'
+      ],
+      [
+        [
+          20 => ['optionname' => '128'],
+          10 => ['optionname' => '96'],
+          11 => ['optionname' => '52']
+        ],
+        [
+          ['optionname' => '52'],
+          ['optionname' => '96'],
+          ['optionname' => '128']
+        ],
+        'Kellerkinder\FancySorter\NumericSorter'
+      ],
+      [
+        [
+          20 => ['optionname' => 'Green'],
+          10 => ['optionname' => 'Red'],
+          11 => ['optionname' => 'Blue']
+        ],
+        [
+          ['optionname' => 'Blue'],
+          ['optionname' => 'Green'],
+          ['optionname' => 'Red']
+        ],
+        'Kellerkinder\FancySorter\AlphanumericSorter'
+
+      ],
+      [
+        [
+          20 => ['optionname' => 'M'],
+          10 => ['optionname' => 'S'],
+          11 => ['optionname' => 'L']
+        ],
+        [
+          ['optionname' => 'S'],
+          ['optionname' => 'M'],
+          ['optionname' => 'L']
+        ],
         'Kellerkinder\FancySorter\ClothingSizeSorter'
       ]
     ];

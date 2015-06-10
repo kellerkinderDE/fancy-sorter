@@ -4,13 +4,14 @@ namespace Kellerkinder\FancySorter;
 
 use RuntimeException;
 use InvalidArgumentException;
+use Closure;
 
 class ChainedSorter implements ChainedSorterInterface
 {
   protected $sorters;
   protected $valueAccessor;
 
-  public function __construct(array $sorters = [])
+  public function __construct(array $sorters = [], Closure $valueAccessor = null)
   {
     $filtered = array_filter(
       $sorters,
@@ -30,10 +31,10 @@ class ChainedSorter implements ChainedSorterInterface
 
     if (!$sorters) {
       $sorters = [
-        new ClothingSizeSorter(),
-        new JeansSizeSorter(),
-        new NumericSorter(),
-        new AlphanumericSorter()
+        new ClothingSizeSorter($valueAccessor),
+        new JeansSizeSorter($valueAccessor),
+        new NumericSorter($valueAccessor),
+        new AlphanumericSorter($valueAccessor)
       ];
     }
 
