@@ -26,7 +26,7 @@ class NumericSorter implements SpecificSorterInterface
       );
     }
 
-    sort($input, SORT_NUMERIC);
+    usort($input, [$this, 'sortCallback']);
     return $input;
   }
 
@@ -34,6 +34,18 @@ class NumericSorter implements SpecificSorterInterface
   {
     $input = array_map($this->valueAccessor, $input);
     return count($input) === count(array_filter($input, 'is_numeric'));
+  }
+
+  protected function sortCallback($a, $b)
+  {
+    $av = intval(call_user_func($this->valueAccessor, $a));
+    $bv = intval(call_user_func($this->valueAccessor, $b));
+
+    if ($av === $bv) {
+      return 0;
+    }
+
+    return $av <= $bv ? -1 : 1;
   }
 
   protected function simpleValueAccessor($value)

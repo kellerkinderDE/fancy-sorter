@@ -112,4 +112,42 @@ class NumericSorterTest extends PHPUnit_Framework_TestCase
       )
     );
   }
+
+  public function testArraySortLong()
+  {
+    $sorter = new NumericSorter(
+      function($value) {
+        return $value['optionname'];
+      }
+    );
+
+    $this->assertSame(
+      [
+        ['optionname' => '34'],
+        ['optionname' => '36'],
+        ['optionname' => '38'],
+        ['optionname' => '40'],
+        ['optionname' => '42'],
+        ['optionname' => '44'],
+        ['optionname' => '46'],
+        ['optionname' => '48'],
+        ['optionname' => '50'],
+        ['optionname' => '52']
+      ],
+      $sorter->sort(
+        [
+          7 => ['optionname' => '48'],
+          21 => ['optionname' => '34'],
+          1 => ['optionname' => '36'],
+          8 => ['optionname' => '50'],
+          2 => ['optionname' => '38'],
+          9 => ['optionname' => '52'],
+          3 => ['optionname' => '40'],
+          4 => ['optionname' => '42'],
+          5 => ['optionname' => '44'],
+          6 => ['optionname' => '46']
+        ]
+      )
+    );
+  }
 }
