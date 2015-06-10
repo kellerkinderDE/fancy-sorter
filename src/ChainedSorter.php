@@ -10,17 +10,8 @@ class ChainedSorter implements ChainedSorterInterface
   protected $sorters;
   protected $valueAccessor;
 
-  public function __construct(array $sorters)
+  public function __construct(array $sorters = [])
   {
-    if (!$sorters) {
-      throw new InvalidArgumentException(
-        sprintf(
-          '%s requires at least one instance of SorterInterface',
-          __CLASS__
-        )
-      );
-    }
-
     $filtered = array_filter(
       $sorters,
       function($sorter) {
@@ -35,6 +26,15 @@ class ChainedSorter implements ChainedSorterInterface
           __CLASS__
         )
       );
+    }
+
+    if (!$sorters) {
+      $sorters = [
+        new ClothingSizeSorter(),
+        new JeansSizeSorter(),
+        new NumericSorter(),
+        new AlphanumericSorter()
+      ];
     }
 
     $this->sorters = $sorters;

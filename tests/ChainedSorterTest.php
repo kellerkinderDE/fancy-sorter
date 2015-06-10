@@ -136,12 +136,12 @@ class ChainedSorterTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @expectedException InvalidArgumentException
-   * @expectedExceptionMessage Kellerkinder\FancySorter\ChainedSorter requires at least one instance of SorterInterface
+   * @dataProvider valueProvider
    */
-  public function testChainedEmptyArray()
+  public function testChainedEmptyArray($input)
   {
-    new ChainedSorter([]);
+    $sorter = new ChainedSorter();
+    $this->assertTrue($sorter->supports($input));
   }
 
   public function valueProvider()
