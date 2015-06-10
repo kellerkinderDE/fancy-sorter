@@ -27,4 +27,28 @@ class AlphanumericSorterTest extends PHPUnit_Framework_TestCase
     $sorter = new AlphanumericSorter();
     $this->assertTrue($sorter->supports(['whatever']));
   }
+
+  public function testArraySort()
+  {
+    $sorter = new AlphanumericSorter(
+      function($value) {
+        return $value['optionname'];
+      }
+    );
+
+    $this->assertSame(
+      [
+        ['optionname' => 'Blue'],
+        ['optionname' => 'Green'],
+        ['optionname' => 'Red']
+      ],
+      $sorter->sort(
+        [
+          20 => ['optionname' => 'Green'],
+          10 => ['optionname' => 'Red'],
+          11 => ['optionname' => 'Blue']
+        ]
+      )
+    );
+  }
 }

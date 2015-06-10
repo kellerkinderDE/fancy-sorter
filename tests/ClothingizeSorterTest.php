@@ -70,4 +70,28 @@ class ClothingSizeSorterTest extends PHPUnit_Framework_TestCase
     $sorter = new ClothingSizeSorter();
     $sorter->sort($input);
   }
+
+  public function testArraySort()
+  {
+    $sorter = new ClothingSizeSorter(
+      function($value) {
+        return $value['optionname'];
+      }
+    );
+
+    $this->assertSame(
+      [
+        ['optionname' => 'S'],
+        ['optionname' => 'M'],
+        ['optionname' => 'L']
+      ],
+      $sorter->sort(
+        [
+          20 => ['optionname' => 'M'],
+          10 => ['optionname' => 'S'],
+          11 => ['optionname' => 'L']
+        ]
+      )
+    );
+  }
 }

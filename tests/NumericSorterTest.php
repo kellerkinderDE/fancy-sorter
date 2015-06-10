@@ -88,4 +88,28 @@ class NumericSorterTest extends PHPUnit_Framework_TestCase
     $sorter = new NumericSorter();
     $sorter->sort($input);
   }
+
+  public function testArraySort()
+  {
+    $sorter = new NumericSorter(
+      function($value) {
+        return $value['optionname'];
+      }
+    );
+
+    $this->assertSame(
+      [
+        ['optionname' => '52'],
+        ['optionname' => '96'],
+        ['optionname' => '128']
+      ],
+      $sorter->sort(
+        [
+          20 => ['optionname' => '128'],
+          10 => ['optionname' => '96'],
+          11 => ['optionname' => '52']
+        ]
+      )
+    );
+  }
 }

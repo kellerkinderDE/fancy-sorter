@@ -3,9 +3,17 @@
 namespace Kellerkinder\FancySorter;
 
 use InvalidArgumentException;
+use Closure;
 
-class NumericSorter implements SorterInterface
+class NumericSorter implements SpecificSorterInterface
 {
+  protected $valueAccessor;
+
+  public function __construct(Closure $valueAccessor = null)
+  {
+    $this->valueAccessor = $valueAccessor ?: [$this, 'simpleValueAccessor'];
+  }
+
   public function sort(array $input)
   {
     if (!$this->supports($input)) {
@@ -24,6 +32,12 @@ class NumericSorter implements SorterInterface
 
   public function supports(array $input)
   {
+    $input = array_map($this->valueAccessor, $input);
     return count($input) === count(array_filter($input, 'is_numeric'));
+  }
+
+  protected function simpleValueAccessor($value)
+  {
+    return $value;
   }
 }

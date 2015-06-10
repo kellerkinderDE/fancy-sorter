@@ -3,11 +3,18 @@
 namespace Kellerkinder\FancySorter;
 
 use InvalidArgumentException;
+use Closure;
 
-class ClothingSizeSorter implements SorterInterface
+class ClothingSizeSorter implements SpecificSorterInterface
 {
   protected static $mapping = ['S' => -1, 'M' => 0, 'L' => 1];
   protected static $pattern = '!^((?P<count>\d)?(?P<x>X+))?(?P<size>[SL])$!';
+  protected $valueAccessor;
+
+  public function __construct(Closure $valueAccessor = null)
+  {
+    $this->valueAccessor = $valueAccessor ?: [$this, 'simpleValueAccessor'];
+  }
 
   public function sort(array $input)
   {
@@ -30,6 +37,7 @@ class ClothingSizeSorter implements SorterInterface
     $filtered = array_filter(
       $input,
       function($value) {
+        $value = call_user_func($this->valueAccessor, $value);
         return array_key_exists($value, self::$mapping) ||
                preg_match(self::$pattern, $value);
       }
@@ -50,16 +58,17 @@ class ClothingSizeSorter implements SorterInterface
     return $av <= $bv ? -1 : 1;
   }
 
-  protected function calculatePriority($input)
+  protected function calculatePriority($value)
   {
-    $input = trim(strtoupper($input));
+    $value = call_user_func($this->valueAccessor, $value);
+    $value = trim(strtoupper($value));
     $priority = NULL;
 
-    if (array_key_exists($input, self::$mapping)) {
-      return self::$mapping[$input];
+    if (array_key_exists($value, self::$mapping)) {
+      return self::$mapping[$value];
     }
 
-    preg_match(self::$pattern, $input, $matches);
+    preg_match(self::$pattern, $value, $matches);
 
     $priority = self::$mapping[$matches['size']];
 
@@ -72,5 +81,10 @@ class ClothingSizeSorter implements SorterInterface
     }
 
     return $priority;
+  }
+
+  protected function simpleValueAccessor($value)
+  {
+    return $value;
   }
 }

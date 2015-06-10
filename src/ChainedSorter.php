@@ -5,9 +5,10 @@ namespace Kellerkinder\FancySorter;
 use RuntimeException;
 use InvalidArgumentException;
 
-class ChainedSorter implements SorterInterface
+class ChainedSorter implements ChainedSorterInterface
 {
   protected $sorters;
+  protected $valueAccessor;
 
   public function __construct(array $sorters)
   {

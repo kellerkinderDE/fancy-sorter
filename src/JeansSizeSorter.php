@@ -3,10 +3,17 @@
 namespace Kellerkinder\FancySorter;
 
 use InvalidArgumentException;
+use Closure;
 
-class JeansSizeSorter implements SorterInterface
+class JeansSizeSorter implements SpecificSorterInterface
 {
   protected static $pattern = '!^(?P<width>\d+)W?\s*/\s*(?P<length>\d+)L?$!';
+  protected $valueAccessor;
+
+  public function __construct(Closure $valueAccessor = null)
+  {
+    $this->valueAccessor = $valueAccessor ?: [$this, 'simpleValueAccessor'];
+  }
 
   public function sort(array $input)
   {
@@ -29,6 +36,7 @@ class JeansSizeSorter implements SorterInterface
     $filtered = array_filter(
       $input,
       function($value) {
+        $value = call_user_func($this->valueAccessor, $value);
         return preg_match(self::$pattern, $value);
       }
     );
@@ -44,8 +52,17 @@ class JeansSizeSorter implements SorterInterface
     );
   }
 
-  protected function normalizeValue($input)
+  protected function normalizeValue($value)
   {
-    return preg_replace(self::$pattern, '$1/$2', trim($input));
+    return preg_replace(
+      self::$pattern,
+      '$1/$2',
+      trim(call_user_func($this->valueAccessor, $value))
+    );
+  }
+
+  protected function simpleValueAccessor($value)
+  {
+    return $value;
   }
 }

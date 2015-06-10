@@ -4,6 +4,6 @@ namespace Kellerkinder\FancySorter;
 
 interface SorterInterface
 {
-  function sort(array $input);
-  function supports(array $input);
+  public function sort(array $input);
+  public function supports(array $input);
 }
