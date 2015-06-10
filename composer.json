@@ -1,7 +1,7 @@
 {
     "name": "kellerkinder/fancy-sorter",
     "license": "MIT",
-    "description": "<description>",
+    "description": "Fancy Sorter is a small library that offers several sorters for specific use classes often known and seen in ecommerce projects that offer clothing products.",
     "authors": [
         {
             "name": "Stefan Matheis",
